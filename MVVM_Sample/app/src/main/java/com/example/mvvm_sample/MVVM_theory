@@ -1,0 +1,20 @@
+
+MVVM 동작 순서 : 1. 사용자의 Action이 View를 통해 들어온다.
+                2. Command패턴을 이용해 ViewModel에 Action을 전달한다.
+                3. ViewModel이 Model에서 데이터를 요청하고, Model은 ViewModel에서 요청받은 데이터를 전달
+                4. ViewModel은 응답받은 데이터를 가공, 저장
+                5. View는 ViewModel과의 Data Binding을 이용해 화면을 갱신한다.
+
+          장점 : View와 Model 사이의 의존성이 없음.
+                View와 ViewModel사이의 의존성 또한 존재하지 않는다.
+                각 부분들은 독립적이기 때문에 개별적 개발이 가능.
+
+데이터바인딩 : - 직접 액티비티에 뷰를 바인딩해주는 수작업을 막기위해 사용
+             - findViewById() 사용하지 않아도 된다. 자동으로 xml에서 만든 View들을 만들어준다.
+             - RecyclerView 사용시 각각의 item들을 set 해주지 않아도 알아서 xml에서 처리할 수 있다.
+             - Observable을 이용해 실시간으로 데이터를 바꿔줄 수 있다.
+             - build.gradle(Module:app)에 따로 옵션설정.
+             - 해당 xml에 layout, data으로 감싸준다.
+
+
+
