@@ -5,7 +5,7 @@
     <data>
         <variable
             name="activity"
-            type="com.example.mvvm_sample.MainActivity" />
+            type="com.example.mvvm_sample.databinding.MainActivity" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

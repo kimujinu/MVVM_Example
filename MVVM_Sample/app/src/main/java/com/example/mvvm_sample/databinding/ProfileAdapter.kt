@@ -1,4 +1,4 @@
-package com.example.mvvm_sample
+package com.example.mvvm_sample.databinding
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,10 +12,11 @@ class ProfileAdapter (private val context : Context) : RecyclerView.Adapter<Prof
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileVH {
         val binding = RcvListItemBinding.inflate(
-            LayoutInflater.from(context), parent, false
-        )
+            LayoutInflater.from(context), parent, false)
 
-        return ProfileVH(binding)
+        return ProfileVH(
+            binding
+        )
     }
 
     override fun getItemCount(): Int = data.size
