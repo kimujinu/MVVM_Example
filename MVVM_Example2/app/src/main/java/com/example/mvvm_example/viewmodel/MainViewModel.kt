@@ -27,6 +27,7 @@ class MainViewModel(private val model: DataModel) : BaseViewModel() {
                     if (documents.size > 0) {
                         Log.d(TAG, "documents : $documents")
                         _imageSearchResponseLiveData.postValue(this)
+                        showSnackbar("찾았다!")
                     }
                     Log.d(TAG, "meta : $meta")
                 }
