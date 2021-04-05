@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.google.android.material.snackbar.Snackbar
 
 /*
     BaseKotlinActivity<ActivitySbsMainBinding>
@@ -67,9 +68,19 @@ abstract class BaseKotlinActivity<T: ViewDataBinding, R: BaseViewModel> : AppCom
 
         viewDataBinding = DataBindingUtil.setContentView(this,layoutResourceId)
 
+        snackbarObserving()
         initStartView()
         initDataBinding()
         initAfterBinding()
+    }
+
+    private fun snackbarObserving() {
+        viewModel.observeSnackbarMessage(this) {
+            Snackbar.make(findViewById(android.R.id.content), it, Snackbar.LENGTH_LONG).show()
+        }
+        viewModel.observeSnackbarMessageStr(this){
+            Snackbar.make(findViewById(android.R.id.content), it, Snackbar.LENGTH_LONG).show()
+        }
     }
     
 }
