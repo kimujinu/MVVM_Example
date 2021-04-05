@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MVVM_Example</string>
+    <string name="kakao_app_key">ef26df2d529749b3aeda009832b94c47</string>
+
+</resources>
