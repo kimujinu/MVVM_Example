@@ -11,14 +11,32 @@ MVVM 동작 순서 : 1. 사용자의 Action이 View를 통해 들어온다.
                 View와 ViewModel사이의 의존성 또한 존재하지 않는다.
                 각 부분들은 독립적이기 때문에 개별적 개발이 가능.
 
-         View : 사용자에게 보이는 화면
-   View Model : View를 표현하기 위해 만든 View를 위한 Model.View를 나타내주기 위한 데이터처리 담당
+         View : - 사용자에게 보이는 화면
+                - Activity, Fragment, CustomView, Dialog, Toast, Snackbar, Menu 등의 UI 컴포넌트
+                - View는 UI 업데이트를 위해 ViewModel과 바인딩하게 된다. 다른 표현으로는 View가 ViewModel에 구독을 하게되고,
+                  ViewModel의 상태가 변경되면 그 이벤트를 받아 UI를 갱신한다.
+                - permissiont 이나 startActivity 등의 네비게이션 역할도 한다.
+                
+   View Model : - View와 Model 사이의 매개체 역할을 한다.
+                - Model에서 가져온 데이터를 UI에 필요한 정보로 가공
+                - View가 가져갈 수 있도록 해당 데이터 변경에 대한 notify를 보냄.
+                - ViewModel과 View는 MVP패턴과 달리 일대다 관계를 가질 수 있다. 여러개의 Fragment가 하나의 ViewModel을 가질 수 있다.
+                - ViewModel은 View에 영향을 끼칠 수 있는 Model의 상태관리도 담당한다. ex)Loding, Network error, offLine visibility..
+                - View의 Context에 대한 레퍼런스를 가지면 안된다.
+                  - View는 ViewModel의 레퍼런스를 가지지만, ViewModel은 View에 대한 정보가 전혀 없어야 한다.
+                    만약 ViewModel이 View의 레퍼런스를 가진다면, LifeCycle에 메모리누수가 발생할 수 있다.
+                    ViewModel이 destroy() 이외의 라이프사이클에서는 메모리에서 해제되지 않기 때문이다.
+                - View를 표현하기 위해 만든 View를 위한 Model.View를 나타내주기 위한 데이터처리 담당
                 - 사용목적 : UI와 로직의 분리, 액티비티와 프래그먼트는 UI를 업데이트 하는데만 주력할 수 있고,
                             ViewModel에 있는 데이터는 액티비티or프래그먼트의 라이프사이클로부터 자유로워 지기위해
                             ViewModel에 있는 데이터는 싱글톤 객체처럼 사용이 가능해서 프래그먼트 사이에서 ViewModel을
                             이용해 데이터를 쉽게 공유할 수 있음.
                 - onCleared() : ViewModel에는 onCleared()함수가 존재한다. 이것은 onDestory()가 호출된 후 실행되는 함수이다.
-        Model : 어플에서 사용되는 데이터 및 데이터 조작 부분(ex. 서버에서 들어오는 데이터)
+                
+        Model : - 어플에서 사용되는 데이터 및 데이터 조작 부분(ex. 서버에서 들어오는 데이터)
+                - Network, DB, SharedPreferences 등 다양한 Data Source로 부터 필요한 데이터를 준비한다.
+                - ViewModel 에서 데이터를 가져갈 수 있게 데이터를 준비하고, 그에 대한 이벤트를 보낸다.
+                
      LiveData : 식별 가능한 데이터 홀더 클래스이다. 스스로 라이프사이클을 인식하여 장점이 존재.
                 LiveData는 ViewModel과 함께 사용해야 효과가 커짐. ViewModel 안에 있는 LiveData 객체를
                 DataBinding을 통해 UI에서 관찰만 할 수 있도록 만들면 액티비티나 프래그먼트에서 일일히 데이터를
