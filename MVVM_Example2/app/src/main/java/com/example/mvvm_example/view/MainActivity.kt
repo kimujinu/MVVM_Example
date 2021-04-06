@@ -36,8 +36,8 @@ class MainActivity : BaseKotlinActivity<ActivityMainBinding, MainViewModel>() {
                         => 이렇게 하면 ViewModel을 테스팅용 모델을 ViewModel의 생성자로 injection 해줌으로써 ViewModel을 테스팅하기 쉬워짐.
          그 후 테스팅 하기 위해 DI(Dependency Injection)을 해야하는데 이 작업을 위한 라이브러리가 존재(Dagger2, Koin ...)
      */
-    override val viewModel: MainViewModel by viewModel()//Koin을 통한 의존성(Dependcy Injection) 주입(테스팅을 위함)
-    private val mainSearchRecyclerViewAdapter: MainSearchRecyclerViewAdapter by inject()
+    override val viewModel: MainViewModel by viewModel()//Koin을 통한 의존성(Dependcy Injection) 주입(테스팅을 위함), 바로 주입방식
+    private val mainSearchRecyclerViewAdapter: MainSearchRecyclerViewAdapter by inject() //Lazy 방식
 
 
     override fun initStartView() {
@@ -55,6 +55,9 @@ class MainActivity : BaseKotlinActivity<ActivityMainBinding, MainViewModel>() {
 
     }
 
+    /*
+        viewModel에서 imageSearchResponseLiveData를 observe 한다.
+     */
     override fun initDataBinding() {
         viewModel.imageSearchResponseLiveData.observe(this, androidx.lifecycle.Observer {
             it.documents.forEach { document ->

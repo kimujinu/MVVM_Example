@@ -3,7 +3,8 @@ package com.example.mvvm_example.model.response
 data class ImageSearchResponse (
     var documents:ArrayList<Document>,
     var meta:Meta
-) {
+)
+{
     data class Document(
         var collection:String,
         var thumbnail_url:String,

@@ -12,13 +12,14 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 /*
+
  DI를 하는 실제 코드, 혹은 DI를 위한 설계도
  DI(Dependency Injction) 이란 : Android는 context의 영향을 많이 받는 플랫폼이다.
                                 예로 들면 Activity LifeCycle에 따라 자원을 생성하고 사용 할 수 있다,
                                 즉, Activity, Fragment내에서 선언되고 사용되는 Instance들은
                                 Activity, Fragment의 영향을 받는다는 말이다.
                                 Instance 생성 시 내부 환경의 영향을 받는다면, 같은 Instance라도 다른 환경에서
-                                다르게 동작 할 수 있다. 하지만 항상 같은 환경에서만 Instance를 생헝하고,
+                                다르게 동작 할 수 있다. 하지만 항상 같은 환경에서만 Instance를 생성하고,
                                 Activity나 Fragment에서는 생성된 Instance를 받아서 사용만 한다면
                                 내부 환경과 상관없이 같은 동작을 하며, 범용적으로 재사용 할 수 있다.
                                 이러한 개념을 DI(Dependency Injection)이라고 한다.
@@ -28,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
                                 테스트 용이.
  */
 var retrofitPart = module {
-    single<KakaoSearchService> {
+    single<KakaoSearchService> {//single : 앱이 실행되는 동안 계속 유지되는 싱글톤 객체 생성.
         Retrofit.Builder()
             .baseUrl("https://dapi.kakao.com")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())// Rxjava 설정
@@ -37,7 +38,9 @@ var retrofitPart = module {
             .create(KakaoSearchService::class.java)
     }
 }
-
+/*
+    factory : 요청할 때마다 매번 새로운 객체를 생성.
+ */
 var adapterPart = module {
     factory {
         MainSearchRecyclerViewAdapter()
@@ -61,3 +64,18 @@ var viewModelPart = module {
 
 var myDiModule = listOf(retrofitPart, adapterPart, modelPart, viewModelPart)
 //다른곳에서 get() 이나 by inject()를 통해 원하는 서비스를 얻어올수 있다.
+
+/*
+    DSL이란 : DSL(Domain Specific Language)의 약어, 도메인 특화 언어
+    Koin DSL 키워드 : - module : koin 모듈 정의
+                     - ViewModel : Activity나 Fragment에 각 ViewModel을 주입
+                     - factory : 의존성 주입(inject/get) 시점마다 새로운 객체를 매번 생성
+                     - single : 해당 객체를 싱글톤으로 생성 (App LifeCycle 전체동안 단일 인스턴스)
+                     - bind : 생성할 객체를 다른 Type으로 바인딩(Class, Interface 상속관계 필요)
+                     - get() : Component 내에서 알맞은 의존성 주입
+                     - inject() : get과 같이 알맞은 의존성 주입(by inject()방식, val에만 가능, var변수에 사용불가)
+
+     Koin 동작방식 :  1. Module선언(생성)
+                     2. Application 단위 Class에서 startKoin()으로 Koin 실행
+                     3. 의존성 주입 - 구성요소(Activity, Fragment, Class 등)
+ */
