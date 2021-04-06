@@ -13,6 +13,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /*
  DI를 하는 실제 코드, 혹은 DI를 위한 설계도
+ DI(Dependency Injction) 이란 : Android는 context의 영향을 많이 받는 플랫폼이다.
+                                예로 들면 Activity LifeCycle에 따라 자원을 생성하고 사용 할 수 있다,
+                                즉, Activity, Fragment내에서 선언되고 사용되는 Instance들은
+                                Activity, Fragment의 영향을 받는다는 말이다.
+                                Instance 생성 시 내부 환경의 영향을 받는다면, 같은 Instance라도 다른 환경에서
+                                다르게 동작 할 수 있다. 하지만 항상 같은 환경에서만 Instance를 생헝하고,
+                                Activity나 Fragment에서는 생성된 Instance를 받아서 사용만 한다면
+                                내부 환경과 상관없이 같은 동작을 하며, 범용적으로 재사용 할 수 있다.
+                                이러한 개념을 DI(Dependency Injection)이라고 한다.
+ Dependency Injection 사용목적 : 객체 간의 의존관계를 객체-객체가 아닌 외부에서 객체를 생성하고 전달해줌으로써
+                                 객체간의 의존성 제거 및 결합도를 낮추는 것.
+                         장점 : 모듈간의 의존성이 낮아져 유지보수 및 코드 재사용에 좋다.
+                                테스트 용이.
  */
 var retrofitPart = module {
     single<KakaoSearchService> {
