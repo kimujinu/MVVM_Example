@@ -57,6 +57,8 @@ class MainActivity : BaseKotlinActivity<ActivityMainBinding, MainViewModel>() {
 
     /*
         viewModel에서 imageSearchResponseLiveData를 observe 한다.
+        첫번째 매개변수 this : LifeCycleOwner인 MainActivity이다.
+        두번째 매개변수 androidx.lifecycle.Observer 콜백은 LiveData(liveText)의 value의 변경을 감지하고 호출하는 부분
      */
     override fun initDataBinding() {
         viewModel.imageSearchResponseLiveData.observe(this, androidx.lifecycle.Observer {
