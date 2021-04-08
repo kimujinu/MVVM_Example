@@ -37,6 +37,16 @@ MVVM 동작 순서 : 1. 사용자의 Action이 View를 통해 들어온다.
                 - Network, DB, SharedPreferences 등 다양한 Data Source로 부터 필요한 데이터를 준비한다.
                 - ViewModel 에서 데이터를 가져갈 수 있게 데이터를 준비하고, 그에 대한 이벤트를 보낸다.
                 
+ role Summary : - View : 1. Activity / Fragment가 View 역할을 함.
+                         2. 사용자의 Action을 받는다.(텍스트 입력, 버튼터치 등등)
+                         3. ViewModel의 데이터를 관찰하여 UI 갱신
+                
+                - ViewModel : 1. View가 요청한 데이터를 Model로 요청한다.
+                              2. Model 로부터 요청한 데이터를 받는다.
+                
+                - Model : 1. ViewModel 이 요청한 데이터를 반환한다.
+                          2. Room, Realm 과 같은 DB 사용이나 Retrofit을 통한 백엔드 API 호출(네트워킹 작업)이 보편적
+                
      LiveData : 식별 가능한 데이터 홀더 클래스이다. 스스로 라이프사이클을 인식하여 장점이 존재.
                 LiveData는 ViewModel과 함께 사용해야 효과가 커짐. ViewModel 안에 있는 LiveData 객체를
                 DataBinding을 통해 UI에서 관찰만 할 수 있도록 만들면 액티비티나 프래그먼트에서 일일히 데이터를
